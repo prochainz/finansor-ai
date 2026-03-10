@@ -1,6 +1,9 @@
 [
   {
     "id": "1",
+    "type": "news",
+    "source": "Wall Street Journal",
+    "source_url": "https://wsj.com",
     "author": {
       "name": "Wall Street Journal",
       "handle": "@WSJ",
@@ -8,8 +11,15 @@
       "avatar": "https://ui-avatars.com/api/?name=WSJ&background=0D0D0D&color=fff&rounded=true"
     },
     "content": "Federal Reserve officials are increasingly confident inflation is on a sustained path to 2%, paving the way for a potential rate cut as soon as September. #FED #InterestRates #Macro",
+    "url": "https://twitter.com/WSJ/status/123",
     "timestamp": "2026-03-10T14:30:00Z",
     "sentiment": "bullish",
+    "asset_impact": [
+      {"asset": "S&P 500", "expected": "+1.2%", "direction": "up"},
+      {"asset": "USD Index", "expected": "-0.8%", "direction": "down"},
+      {"asset": "Gold", "expected": "+1.5%", "direction": "up"}
+    ],
+    "quant_insight": "A 25bps cut typically weakens USD by 0.5-1% in the short term, driving safe-haven assets and equities higher. Historical correlation (last 5 cycles) shows Gold appreciating avg 4% within 30 days of first cut.",
     "tags": ["#FED", "#InterestRates", "#Macro"],
     "metrics": {
       "likes": "12.4K",
@@ -19,6 +29,9 @@
   },
   {
     "id": "2",
+    "type": "market_data",
+    "source": "Bloomberg Markets",
+    "source_url": "https://bloomberg.com/markets",
     "author": {
       "name": "Bloomberg Markets",
       "handle": "@markets",
@@ -26,8 +39,14 @@
       "avatar": "https://ui-avatars.com/api/?name=BM&background=0000FF&color=fff&rounded=true"
     },
     "content": "Gold futures hit a new all-time high of $2,350/oz as central banks continue accumulation and geopolitical tensions remain elevated. Demand from Asia remains robust. #Gold #Commodities",
+    "url": "https://twitter.com/markets/status/456",
     "timestamp": "2026-03-10T12:15:00Z",
     "sentiment": "bullish",
+    "asset_impact": [
+      {"asset": "Gold Miners ETF", "expected": "+2.4%", "direction": "up"},
+      {"asset": "Silver", "expected": "+1.8%", "direction": "up"}
+    ],
+    "quant_insight": "Central bank net purchases have established a hard floor at $2,000. Momentum indicators (RSI 74) suggest short-term overbought conditions, but macro tailwinds remain strong.",
     "tags": ["#Gold", "#Commodities"],
     "metrics": {
       "likes": "8.9K",
@@ -37,6 +56,9 @@
   },
   {
     "id": "3",
+    "type": "analysis",
+    "source": "Finansör Research",
+    "source_url": "https://finansor.ai/research",
     "author": {
       "name": "Finansör Research",
       "handle": "@FinansorQuant",
@@ -44,8 +66,14 @@
       "avatar": "https://ui-avatars.com/api/?name=FQ&background=10B981&color=fff&rounded=true"
     },
     "content": "ABD Tarım Dışı İstihdam verisi beklentilerin oldukça altında geldi: 114K vs Beklenti 175K. İşsizlik oranı %4.3'e yükseldi. Resesyon endişeleri tahvil piyasasını fiyatlıyor. 🇺🇸📉 #NFP #Unemployment",
+    "url": "https://twitter.com/FinansorQuant/status/789",
     "timestamp": "2026-03-09T15:45:00Z",
     "sentiment": "bearish",
+    "asset_impact": [
+      {"asset": "10Y Treasury Yield", "expected": "-15bps", "direction": "down"},
+      {"asset": "Russell 2000", "expected": "-2.1%", "direction": "down"}
+    ],
+    "quant_insight": "Sahm Kuralı tetiklendi (3 aylık işsizlik ortalaması en düşük seviyeden 0.5% yukarıda). Resesyon olasılığı modelimizde %25'ten %42'ye güncellendi. Defansif sektörlere (Utilities, Healthcare) rotasyon bekliyoruz.",
     "tags": ["#NFP", "#Unemployment", "#Macro"],
     "metrics": {
       "likes": "4.5K",
@@ -55,6 +83,9 @@
   },
   {
     "id": "4",
+    "type": "news",
+    "source": "Reuters",
+    "source_url": "https://reuters.com",
     "author": {
       "name": "EconBrief",
       "handle": "@EconBrief_Global",
@@ -62,8 +93,15 @@
       "avatar": "https://ui-avatars.com/api/?name=EB&background=4F46E5&color=fff&rounded=true"
     },
     "content": "Oil prices (WTI) slump below $70/bbl on weakening demand forecasts from China and potential OPEC+ production hikes scheduled for Q4. Market sentiment shifts heavily bearish. #Oil #OPEC",
+    "url": "https://twitter.com/EconBrief_Global/status/101",
     "timestamp": "2026-03-09T09:20:00Z",
     "sentiment": "bearish",
+    "asset_impact": [
+      {"asset": "WTI Crude", "expected": "-3.5%", "direction": "down"},
+      {"asset": "Energy Sector ETF", "expected": "-1.8%", "direction": "down"},
+      {"asset": "Airlines ETF", "expected": "+2.0%", "direction": "up"}
+    ],
+    "quant_insight": "Break below key $70 psychological support triggers systematic CTA selling. Next major structural support level at $64. Airline stocks historically show strong negative correlation (-0.65) to crude oil drops of this magnitude.",
     "tags": ["#Oil", "#OPEC", "#Commodities"],
     "metrics": {
       "likes": "2.1K",
@@ -73,6 +111,9 @@
   },
   {
     "id": "5",
+    "type": "analysis",
+    "source": "Macro Insights",
+    "source_url": "https://example.com/macro",
     "author": {
       "name": "Dr. E. Yildiz",
       "handle": "@enesydz_macro",
@@ -80,139 +121,19 @@
       "avatar": "https://ui-avatars.com/api/?name=EY&background=3B82F6&color=fff&rounded=true"
     },
     "content": "Enflasyon katılığı hizmet sektöründe devam ediyor. Çekirdek TÜFE %0.3 artışla piyasa beklentisine paralel gelse de, barınma maliyetleri (shelter) hala soğumadı. FED acele etmeyecektir. 📊 #Inflation #CPI",
+    "url": "https://twitter.com/enesydz_macro/status/202",
     "timestamp": "2026-03-08T18:10:00Z",
     "sentiment": "neutral",
+    "asset_impact": [
+      {"asset": "2Y Treasury Yield", "expected": "+5bps", "direction": "up"},
+      {"asset": "Real Estate ETF", "expected": "-0.9%", "direction": "down"}
+    ],
+    "quant_insight": "Barınma maliyetleri (shelter) gecikmeli bir göstergedir. Gerçek zamanlı kira endeksleri düşüş gösterse de TÜFE'ye yansıması 6-9 ay almaktadır. Çekirdek enflasyon momentumu yatay seyrediyor.",
     "tags": ["#Inflation", "#CPI", "#FED"],
     "metrics": {
       "likes": "3.8K",
       "retweets": "890",
       "views": "210K"
-    }
-  },
-  {
-    "id": "6",
-    "author": {
-      "name": "Financial Times",
-      "handle": "@FT",
-      "verified": true,
-      "avatar": "https://ui-avatars.com/api/?name=FT&background=FCD34D&color=000&rounded=true"
-    },
-    "content": "European Central Bank (ECB) signals caution on further rate cuts, citing stubborn wage growth in the services sector. Eurozone inflation stabilizes at 2.4%. #ECB #Eurozone",
-    "timestamp": "2026-03-08T11:00:00Z",
-    "sentiment": "neutral",
-    "tags": ["#ECB", "#Eurozone", "#InterestRates"],
-    "metrics": {
-      "likes": "5.6K",
-      "retweets": "1.4K",
-      "views": "450K"
-    }
-  },
-  {
-    "id": "7",
-    "author": {
-      "name": "Macro Analyst",
-      "handle": "@MacroSniper",
-      "verified": true,
-      "avatar": "https://ui-avatars.com/api/?name=MA&background=EF4444&color=fff&rounded=true"
-    },
-    "content": "Yield curve un-inversion is happening rapidly. Historically, the steepening of the 2s10s curve *after* a long inversion period is when the recession actually starts. Watch out. ⚠️ #Bonds #YieldCurve",
-    "timestamp": "2026-03-07T20:30:00Z",
-    "sentiment": "bearish",
-    "tags": ["#Bonds", "#YieldCurve", "#Recession"],
-    "metrics": {
-      "likes": "15.2K",
-      "retweets": "4.8K",
-      "views": "1.8M"
-    }
-  },
-  {
-    "id": "8",
-    "author": {
-      "name": "Commodity Desk",
-      "handle": "@CommDesk_Live",
-      "verified": false,
-      "avatar": "https://ui-avatars.com/api/?name=CD&background=F59E0B&color=fff&rounded=true"
-    },
-    "content": "Copper inventories in LME warehouses drop 12% in a single week. The 'Dr. Copper' indicator is flashing green for global manufacturing recovery despite China property woes. 🏭📈 #Copper #IndustrialMetals",
-    "timestamp": "2026-03-07T08:45:00Z",
-    "sentiment": "bullish",
-    "tags": ["#Copper", "#IndustrialMetals", "#Macro"],
-    "metrics": {
-      "likes": "1.8K",
-      "retweets": "420",
-      "views": "120K"
-    }
-  },
-  {
-    "id": "9",
-    "author": {
-      "name": "Global Economics",
-      "handle": "@GlobalEconUpdate",
-      "verified": true,
-      "avatar": "https://ui-avatars.com/api/?name=GE&background=10B981&color=fff&rounded=true"
-    },
-    "content": "US Retail Sales print stronger than expected at +0.4% MoM. The consumer remains resilient. Soft landing narrative gains more traction among institutional investors today. 🇺🇸🛍️ #Economy #RetailSales",
-    "timestamp": "2026-03-06T13:30:00Z",
-    "sentiment": "bullish",
-    "tags": ["#Economy", "#RetailSales", "#Macro"],
-    "metrics": {
-      "likes": "6.7K",
-      "retweets": "1.5K",
-      "views": "580K"
-    }
-  },
-  {
-    "id": "10",
-    "author": {
-      "name": "Piyasa Gündemi",
-      "handle": "@PiyasaTurkiye",
-      "verified": true,
-      "avatar": "https://ui-avatars.com/api/?name=PG&background=DC2626&color=fff&rounded=true"
-    },
-    "content": "TCMB PPK özetleri: 'Dezenflasyon süreci öngörülen patikada ilerliyor, ancak hizmet enflasyonundaki katılık yakından izlenmektedir.' Sıkı duruşun korunacağı mesajı net. 🇹🇷🏦 #TCMB #Enflasyon",
-    "timestamp": "2026-03-05T14:00:00Z",
-    "sentiment": "neutral",
-    "tags": ["#TCMB", "#Enflasyon", "#Faiz"],
-    "metrics": {
-      "likes": "2.9K",
-      "retweets": "650",
-      "views": "180K"
-    }
-  },
-  {
-    "id": "11",
-    "author": {
-      "name": "Tech Market Data",
-      "handle": "@TechMacro_Data",
-      "verified": false,
-      "avatar": "https://ui-avatars.com/api/?name=TM&background=8B5CF6&color=fff&rounded=true"
-    },
-    "content": "Semiconductor equipment billings surge 22% YoY. AI infrastructure capex is structurally shifting global GDP growth drivers. This is no longer just a cyclical tech boom. 🤖💻 #AI #Semiconductors",
-    "timestamp": "2026-03-04T16:20:00Z",
-    "sentiment": "bullish",
-    "tags": ["#AI", "#Semiconductors", "#Tech"],
-    "metrics": {
-      "likes": "8.4K",
-      "retweets": "2.6K",
-      "views": "920K"
-    }
-  },
-  {
-    "id": "12",
-    "author": {
-      "name": "Risk Off",
-      "handle": "@RiskOff_Capital",
-      "verified": true,
-      "avatar": "https://ui-avatars.com/api/?name=RO&background=000000&color=fff&rounded=true"
-    },
-    "content": "Commercial Real Estate (CRE) refinancing wall hitting regional banks in Q3. Delinquency rates on office loans just crossed 8% for the first time since 2010. The hidden macro risk. 🏢📉 #CRE #Banking",
-    "timestamp": "2026-03-03T10:15:00Z",
-    "sentiment": "bearish",
-    "tags": ["#CRE", "#Banking", "#MacroRisk"],
-    "metrics": {
-      "likes": "11.5K",
-      "retweets": "3.8K",
-      "views": "1.1M"
     }
   }
 ]

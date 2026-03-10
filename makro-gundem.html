@@ -1,242 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finansör AI - Makro Gündem</title>
+    <title>Finansör AI - Advanced Macro Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        terminal: {
+                            bg: '#0A0A0A',
+                            panel: '#111111',
+                            border: '#333333',
+                            accent: '#3B82F6',
+                            green: '#10B981',
+                            red: '#EF4444',
+                            text: '#D1D5DB',
+                            dim: '#6B7280'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
         
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0B0E14;
-            color: #E2E8F0;
-        }
-        
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background-color: theme('colors.terminal.bg');
+            color: theme('colors.terminal.text');
+            font-family: theme('fontFamily.sans');
+            overflow-x: hidden;
         }
 
-        .tweet-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .tweet-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .sentiment-bullish { color: #10B981; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .sentiment-bearish { color: #EF4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .sentiment-neutral { color: #9CA3AF; background: rgba(156, 163, 175, 0.1); border: 1px solid rgba(156, 163, 175, 0.3); }
-        
-        .tag-pill {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60A5FA;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0B0E14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #374151;
+        .terminal-panel {
+            background-color: theme('colors.terminal.panel');
+            border: 1px solid theme('colors.terminal.border');
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
+
+        .terminal-header {
+            background-color: #1A1A1A;
+            border-bottom: 1px solid theme('colors.terminal.border');
+            padding: 4px 12px;
+            font-family: theme('fontFamily.mono');
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: theme('colors.terminal.dim');
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .data-row:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Scrolling Ticker */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            border-bottom: 1px solid theme('colors.terminal.border');
+            border-top: 1px solid theme('colors.terminal.border');
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 30s linear infinite;
+            font-family: theme('fontFamily.mono');
+            font-size: 0.8rem;
+        }
+
+        .ticker:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 2rem;
+            color: #A0AEC0;
+        }
+
+        .up { color: theme('colors.terminal.green'); }
+        .down { color: theme('colors.terminal.red'); }
+
+        .blinking-cursor {
+            font-weight: 700;
+            font-size: 1rem;
+            color: theme('colors.terminal.accent');
+            animation: 1s blink step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { color: transparent; }
+            50% { color: theme('colors.terminal.accent'); }
+        }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            grid-template-rows: auto 1fr;
+            gap: 12px;
+            height: calc(100vh - 140px);
+            padding: 12px;
+        }
+
+        .main-feed {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            overflow-y: auto;
+        }
+
+        .side-panel-top {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            height: 300px;
+        }
+
+        .side-panel-bottom {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.terminal.bg');
+            border-left: 1px solid theme('colors.terminal.border');
+        }
+        ::-webkit-scrollbar-thumb {
             background: #4B5563;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6B7280;
+        }
+        
+        .impact-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: theme('fontFamily.mono');
+            font-size: 0.7rem;
+            margin-right: 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .quant-box {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.2),
+                rgba(0, 0, 0, 0.2) 10px,
+                rgba(255, 255, 255, 0.02) 10px,
+                rgba(255, 255, 255, 0.02) 20px
+            );
+            border-left: 3px solid theme('colors.terminal.accent');
+        }
+
+        a {
+            transition: all 0.2s;
+        }
+        a:hover {
+            color: theme('colors.terminal.accent');
         }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body class="flex flex-col h-screen">
 
-    <!-- Navbar -->
-    <nav class="glass-panel sticky top-0 z-50 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-blue-500 text-xl"></i>
-                        <span class="font-bold text-xl tracking-tight text-white">Finansör<span class="text-blue-500">AI</span></span>
-                    </a>
-                    <div class="hidden md:block ml-10">
-                        <div class="flex items-baseline space-x-6">
-                            <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Ana Sayfa</a>
-                            <a href="dashboard.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Terminal Dashboard</a>
-                            <a href="makro-gundem.html" class="bg-gray-800 text-white px-3 py-2 rounded-md text-sm font-medium border border-gray-700">Makro Gündem</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span class="text-xs text-gray-400 flex items-center gap-1"><i class="fa-solid fa-circle text-green-500 text-[8px]"></i> Live Feed</span>
-                </div>
-            </div>
+    <!-- Top Navigation bar -->
+    <header class="bg-[#111] border-b border-[#333] flex justify-between items-center px-4 py-2 select-none">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="flex items-center gap-2 font-mono font-bold text-white hover:text-blue-400 transition">
+                <i class="fa-solid fa-terminal text-blue-500"></i> FINANSÖR<span class="text-blue-500">_TERM</span>
+            </a>
+            <div class="h-4 w-px bg-gray-700"></div>
+            <nav class="flex gap-4 font-mono text-xs text-gray-400">
+                <a href="index.html" class="hover:text-white">HOME</a>
+                <a href="dashboard.html" class="hover:text-white">MARKETS</a>
+                <a href="makro-gundem.html" class="text-blue-400 font-bold border-b border-blue-400 pb-1">MACRO_NEWS</a>
+            </nav>
         </div>
-    </nav>
+        <div class="flex items-center gap-4 font-mono text-xs">
+            <span class="text-gray-500" id="clock">Loading...</span>
+            <span class="flex items-center gap-1.5 px-2 py-1 bg-green-900/30 border border-green-800 rounded text-green-500">
+                <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> SYS_ONLINE
+            </span>
+        </div>
+    </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <!-- Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker" id="ticker-content">
+            <div class="ticker-item">S&P 500: 5,123.45 <span class="up">▲ 0.45%</span></div>
+            <div class="ticker-item">NASDAQ: 16,234.12 <span class="up">▲ 0.82%</span></div>
+            <div class="ticker-item">US 10Y: 4.25% <span class="down">▼ 2bps</span></div>
+            <div class="ticker-item">EUR/USD: 1.0854 <span class="up">▲ 0.15%</span></div>
+            <div class="ticker-item">GOLD: $2,350.20 <span class="up">▲ 1.2%</span></div>
+            <div class="ticker-item">WTI CRUDE: $69.80 <span class="down">▼ 2.1%</span></div>
+            <div class="ticker-item">BTC: $64,230 <span class="up">▲ 3.4%</span></div>
+            <div class="ticker-item">VIX: 13.45 <span class="down">▼ 4.5%</span></div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Area -->
+    <div class="dashboard-grid">
         
-        <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
-            <div>
-                <h1 class="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-                    <i class="fa-solid fa-globe text-blue-500"></i> Makro Terminal Feed
-                </h1>
-                <p class="mt-2 text-sm text-gray-400">AI-curated institutional macroeconomic intelligence & sentiment analysis.</p>
+        <!-- Main Feed Panel -->
+        <div class="terminal-panel main-feed flex flex-col">
+            <div class="terminal-header sticky top-0 z-10 bg-[#111]">
+                <span><i class="fa-solid fa-satellite-dish mr-2 text-blue-500"></i> LIVE_MACRO_STREAM</span>
+                <div class="flex gap-3">
+                    <button class="hover:text-white" onclick="loadFeed()"><i class="fa-solid fa-rotate-right"></i> REFRESH</button>
+                    <span>|</span>
+                    <button class="hover:text-white"><i class="fa-solid fa-filter"></i> FILTER</button>
+                </div>
             </div>
-            <div class="flex gap-2">
-                <button class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-md text-xs font-medium border border-gray-700 transition"><i class="fa-solid fa-filter"></i> Filter</button>
-                <button class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-md text-xs font-medium border border-blue-500 transition"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+            <div class="p-4 flex-grow relative" id="feed-container">
+                <!-- Feed Content injected by JS -->
+                <div class="absolute inset-0 flex items-center justify-center font-mono text-blue-500">
+                    <div>INITIALIZING DATA STREAM<span class="blinking-cursor">_</span></div>
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            
-            <!-- Sidebar / Stats -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Sentiment Overview -->
-                <div class="glass-panel rounded-xl p-5">
-                    <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">Global Sentiment</h3>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-gray-400">Bullish</span>
-                        <span class="text-sm font-medium text-green-400">45%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 rounded-full h-1.5 mb-4">
-                        <div class="bg-green-500 h-1.5 rounded-full" style="width: 45%"></div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-gray-400">Bearish</span>
-                        <span class="text-sm font-medium text-red-400">30%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 rounded-full h-1.5 mb-4">
-                        <div class="bg-red-500 h-1.5 rounded-full" style="width: 30%"></div>
-                    </div>
-
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-gray-400">Neutral</span>
-                        <span class="text-sm font-medium text-gray-400">25%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 rounded-full h-1.5">
-                        <div class="bg-gray-500 h-1.5 rounded-full" style="width: 25%"></div>
-                    </div>
-                </div>
-
-                <!-- Trending Topics -->
-                <div class="glass-panel rounded-xl p-5">
-                    <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">Trending Macro Tags</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag-pill px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-blue-900/40">#FED</span>
-                        <span class="tag-pill px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-blue-900/40">#Inflation</span>
-                        <span class="tag-pill px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-blue-900/40">#Gold</span>
-                        <span class="tag-pill px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-blue-900/40">#NFP</span>
-                        <span class="tag-pill px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-blue-900/40">#Macro</span>
-                        <span class="tag-pill px-2.5 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-blue-900/40">#Commodities</span>
-                    </div>
-                </div>
+        <!-- Top Right Panel: Sentiment & Models -->
+        <div class="terminal-panel side-panel-top flex flex-col">
+            <div class="terminal-header">
+                <span><i class="fa-solid fa-brain mr-2 text-purple-500"></i> QUANT_MODELS_OVERVIEW</span>
             </div>
-
-            <!-- Feed -->
-            <div class="lg:col-span-3">
-                <div id="tweets-container" class="space-y-4">
-                    <!-- Tweets will be injected here via JS -->
-                    <div class="flex justify-center py-10">
-                        <i class="fa-solid fa-circle-notch fa-spin text-blue-500 text-3xl"></i>
+            <div class="p-4 flex-grow font-mono text-xs">
+                
+                <div class="mb-5">
+                    <div class="flex justify-between text-gray-400 mb-1">
+                        <span>MACRO_SENTIMENT_INDEX</span>
+                        <span class="text-yellow-500">NEUTRAL (48.5)</span>
+                    </div>
+                    <div class="w-full h-2 bg-gray-800 rounded-sm flex overflow-hidden">
+                        <div class="bg-red-500" style="width: 30%"></div>
+                        <div class="bg-gray-500" style="width: 25%"></div>
+                        <div class="bg-green-500" style="width: 45%"></div>
                     </div>
                 </div>
-            </div>
-            
-        </div>
-    </main>
 
-    <footer class="border-t border-gray-800 bg-[#0B0E14] py-6 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <p class="text-gray-500 text-sm">© 2026 Finansör AI. All rights reserved.</p>
-            <div class="flex gap-4 text-gray-500">
-                <i class="fa-brands fa-twitter hover:text-white cursor-pointer transition"></i>
-                <i class="fa-brands fa-github hover:text-white cursor-pointer transition"></i>
+                <div class="mb-4">
+                    <div class="text-gray-500 mb-2 border-b border-gray-800 pb-1">RECESSION_PROB_MODEL (12M)</div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-300">Current Estimate:</span>
+                        <span class="text-red-400 font-bold">42.0% ▲</span>
+                    </div>
+                    <div class="text-[10px] text-gray-600 mt-1">Sahm Rule: TRIGGERED | Yield Curve: STEEPENING</div>
+                </div>
+
+                <div>
+                    <div class="text-gray-500 mb-2 border-b border-gray-800 pb-1">FED_RATE_PROB (SEP MTG)</div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-400">No Change (5.25-5.50%)</span>
+                        <span class="text-gray-300">12%</span>
+                    </div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-400">-25 bps (5.00-5.25%)</span>
+                        <span class="text-blue-400">76%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">-50 bps (4.75-5.00%)</span>
+                        <span class="text-gray-300">12%</span>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </footer>
+
+        <!-- Bottom Right Panel: Market Deductions -->
+        <div class="terminal-panel side-panel-bottom flex flex-col">
+            <div class="terminal-header">
+                <span><i class="fa-solid fa-bolt mr-2 text-yellow-500"></i> MARKET_DEDUCTIONS</span>
+            </div>
+            <div class="p-3 font-mono text-xs" id="deductions-container">
+                <!-- Deductions injected by JS based on feed -->
+                <div class="text-gray-500 text-center py-4">Awaiting signals...</div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        async function loadTweets() {
-            const container = document.getElementById('tweets-container');
+        // Clock Update
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toISOString().replace('T', ' ').substr(0, 19) + ' UTC';
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Load Feed Data
+        async function loadFeed() {
+            const container = document.getElementById('feed-container');
+            const deductionsContainer = document.getElementById('deductions-container');
+            
+            container.innerHTML = `<div class="absolute inset-0 flex items-center justify-center font-mono text-blue-500">FETCHING...<span class="blinking-cursor">_</span></div>`;
+            
             try {
                 const response = await fetch('data/macro_tweets.json');
-                const tweets = await response.json();
+                const data = await response.json();
                 
-                container.innerHTML = ''; // Clear loading spinner
+                container.innerHTML = ''; // Clear loading
+                deductionsContainer.innerHTML = '';
                 
-                tweets.forEach(tweet => {
-                    const date = new Date(tweet.timestamp);
-                    const formattedDate = date.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+                data.forEach(item => {
+                    const date = new Date(item.timestamp);
+                    const timeStr = date.toISOString().replace('T', ' ').substr(0, 16) + 'Z';
                     
-                    let sentimentBadge = '';
-                    if(tweet.sentiment === 'bullish') {
-                        sentimentBadge = `<span class="sentiment-bullish px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-trend-up mr-1"></i>Bullish</span>`;
-                    } else if(tweet.sentiment === 'bearish') {
-                        sentimentBadge = `<span class="sentiment-bearish px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-trend-down mr-1"></i>Bearish</span>`;
-                    } else {
-                        sentimentBadge = `<span class="sentiment-neutral px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"><i class="fa-solid fa-minus mr-1"></i>Neutral</span>`;
+                    let sentimentColor = item.sentiment === 'bullish' ? 'text-green-500' : (item.sentiment === 'bearish' ? 'text-red-500' : 'text-gray-400');
+                    let sentimentIcon = item.sentiment === 'bullish' ? '▲' : (item.sentiment === 'bearish' ? '▼' : '■');
+
+                    // Asset Impacts
+                    let impactsHtml = '';
+                    if (item.asset_impact && item.asset_impact.length > 0) {
+                        impactsHtml = `<div class="mt-3 flex flex-wrap gap-2">`;
+                        item.asset_impact.forEach(impact => {
+                            const color = impact.direction === 'up' ? 'text-green-400 border-green-900' : 'text-red-400 border-red-900';
+                            const icon = impact.direction === 'up' ? '↑' : '↓';
+                            impactsHtml += `<span class="impact-pill ${color}">${impact.asset} ${icon} ${impact.expected}</span>`;
+                        });
+                        impactsHtml += `</div>`;
                     }
 
-                    const verifiedIcon = tweet.author.verified ? `<i class="fa-solid fa-circle-check text-blue-400 text-xs ml-1"></i>` : '';
+                    // Quant Insight Box
+                    let quantHtml = '';
+                    if (item.quant_insight) {
+                        quantHtml = `
+                            <div class="quant-box p-3 mt-3 text-xs font-mono text-gray-300">
+                                <div class="text-blue-400 font-bold mb-1">> QUANT_ANALYSIS:</div>
+                                <div>${item.quant_insight}</div>
+                            </div>
+                        `;
+                    }
 
-                    let tagsHtml = tweet.tags.map(tag => `<span class="text-blue-400 text-sm hover:underline cursor-pointer">${tag}</span>`).join(' ');
-
-                    const tweetHTML = `
-                        <div class="glass-panel rounded-xl p-5 tweet-card border border-gray-800">
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex items-center gap-3">
-                                    <img src="${tweet.author.avatar}" alt="${tweet.author.name}" class="w-10 h-10 rounded-full border border-gray-700">
-                                    <div>
-                                        <div class="flex items-center text-white font-medium">
-                                            ${tweet.author.name} ${verifiedIcon}
-                                        </div>
-                                        <div class="text-gray-500 text-xs">${tweet.author.handle} • ${formattedDate}</div>
-                                    </div>
+                    // Main Feed Item
+                    const itemHtml = `
+                        <div class="border-b border-[#222] pb-5 mb-5 data-row transition-colors duration-200">
+                            <div class="flex justify-between items-start mb-2 font-mono text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-500">[${timeStr}]</span>
+                                    <a href="${item.url}" target="_blank" class="font-bold text-gray-200 hover:text-blue-400">${item.source} <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                                    <span class="px-1.5 py-0.5 bg-[#222] rounded text-gray-400">${item.type.toUpperCase()}</span>
                                 </div>
-                                <div>
-                                    ${sentimentBadge}
-                                </div>
+                                <div class="${sentimentColor} font-bold">[${sentimentIcon} ${item.sentiment.toUpperCase()}]</div>
                             </div>
                             
-                            <div class="text-gray-200 text-sm leading-relaxed mb-3">
-                                ${tweet.content.replace(/(#\w+)/g, '')} <!-- Remove tags from content to display below -->
+                            <div class="text-sm text-gray-300 leading-relaxed font-sans mb-2">
+                                ${item.content}
                             </div>
                             
-                            <div class="mb-4">
-                                ${tagsHtml}
-                            </div>
+                            ${impactsHtml}
+                            ${quantHtml}
                             
-                            <div class="flex items-center gap-6 text-gray-500 text-xs font-medium border-t border-gray-800/50 pt-3">
-                                <div class="flex items-center gap-1.5 hover:text-blue-400 cursor-pointer transition"><i class="fa-regular fa-comment"></i> Reply</div>
-                                <div class="flex items-center gap-1.5 hover:text-green-400 cursor-pointer transition"><i class="fa-solid fa-retweet"></i> ${tweet.metrics.retweets}</div>
-                                <div class="flex items-center gap-1.5 hover:text-red-400 cursor-pointer transition"><i class="fa-regular fa-heart"></i> ${tweet.metrics.likes}</div>
-                                <div class="flex items-center gap-1.5 hover:text-blue-400 cursor-pointer transition"><i class="fa-solid fa-chart-simple"></i> ${tweet.metrics.views}</div>
+                            <div class="mt-3 flex gap-4 font-mono text-[10px] text-gray-500">
+                                <span><a href="${item.url}" target="_blank" class="hover:text-blue-400 transition">SRC: ${item.source_url}</a></span>
+                                <span>|</span>
+                                <span>TAGS: ${item.tags.join(' ')}</span>
                             </div>
                         </div>
                     `;
-                    container.insertAdjacentHTML('beforeend', tweetHTML);
+                    container.insertAdjacentHTML('beforeend', itemHtml);
+
+                    // Add to Deductions panel if bearish or bullish
+                    if (item.sentiment !== 'neutral' && item.asset_impact) {
+                        const topImpact = item.asset_impact[0];
+                        const dirClass = topImpact.direction === 'up' ? 'text-green-400' : 'text-red-400';
+                        const deductionHtml = `
+                            <div class="border-b border-[#222] pb-2 mb-2 last:border-0 hover:bg-[#1a1a1a] p-1 -mx-1 rounded transition cursor-pointer" onclick="window.open('${item.url}', '_blank')">
+                                <div class="text-[10px] text-gray-500 mb-1">${timeStr.substr(5, 11)} | ${item.tags[0]}</div>
+                                <div class="text-gray-300">If ${item.source} report holds:</div>
+                                <div class="font-bold mt-1 ${dirClass}">> EXPECT: ${topImpact.asset} ${topImpact.expected}</div>
+                            </div>
+                        `;
+                        deductionsContainer.insertAdjacentHTML('beforeend', deductionHtml);
+                    }
                 });
+
             } catch (error) {
-                container.innerHTML = `<div class="p-4 bg-red-900/20 border border-red-500/50 rounded-lg text-red-400 text-sm">Error loading macro feed data.</div>`;
-                console.error("Error loading tweets:", error);
+                container.innerHTML = `<div class="absolute inset-0 flex items-center justify-center font-mono text-red-500">ERROR_FETCHING_DATA</div>`;
+                console.error("Error loading feed:", error);
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadTweets);
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(loadFeed, 500); // Slight delay for terminal effect
+        });
     </script>
 </body>
 </html>
