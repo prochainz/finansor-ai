@@ -187,23 +187,6 @@
   </div>
   
   <div class="agent-grid">
-    <div class="agent-card">
-      <div class="agent-icon">⚡</div>
-      <h3 class="agent-name">Volatility Screener Agent</h3>
-      <p class="agent-desc">Aggressive market scanner hunting for extreme price action. Detects 30-50% movers across crypto, stocks, and commodities in real-time.</p>
-      <ul class="agent-features">
-        <li>Extreme volatility alerts</li>
-        <li>Volume/price action correlation</li>
-        <li>Multi-asset scanning</li>
-        <li>High-conviction signals</li>
-      </ul>
-      <div class="agent-pricing">
-        <span class="agent-price">$29</span>
-        <span class="agent-period">/month</span>
-      </div>
-      <a href="#" class="agent-btn">Start Scouting</a>
-    </div>
-
     <!-- Signal Scout - Free -->
     <div class="agent-card">
       <div class="agent-icon">🎯</div>

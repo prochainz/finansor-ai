@@ -1,0 +1,54 @@
+--- index.html
++++ index.html
+@@ -192,7 +192,7 @@
+       <div class="agent-icon">🎯</div>
+-      <h3 class="agent-name">Signal Scout</h3>
+-      <p class="agent-desc">Basic signal detection across 10 popular stocks. Perfect for getting started with AI-driven trading signals.</p>
++      <h3 class="agent-name">DeFi Yield Farmer</h3>
++      <p class="agent-desc">Autonomous AI agent that scans across chains to find the highest, safest yields and auto-compounds returns. Real-time TVL tracking.</p>
+       <ul class="agent-features">
+-        <li>3 core strategies</li>
+-        <li>10 stock coverage</li>
++        <li>Cross-chain analysis</li>
++        <li>Auto-compounding</li>
+         <li>Email alerts</li>
+         <li>Daily summary report</li>
+@@ -210,7 +210,7 @@
+       <div class="agent-icon">📈</div>
+-      <h3 class="agent-name">Quant Analyst</h3>
+-      <p class="agent-desc">Professional-grade quant analysis with 7 strategies, sentiment integration, and real-time alerts.</p>
++      <h3 class="agent-name">Sentiment Sniper</h3>
++      <p class="agent-desc">Ingests Twitter, Reddit, and News APIs to detect early narrative shifts and hype cycles in crypto and traditional markets before price moves.</p>
+       <ul class="agent-features">
+-        <li>7 advanced strategies</li>
+-        <li>100+ stocks coverage</li>
++        <li>Narrative detection</li>
++        <li>Social sentiment scoring</li>
+         <li>Twitter sentiment analysis</li>
+         <li>Telegram alerts</li>
+@@ -229,7 +229,7 @@
+       <div class="agent-icon">💼</div>
+-      <h3 class="agent-name">Portfolio Manager</h3>
+-      <p class="agent-desc">Full portfolio automation with risk management, auto-rebalancing, and custom strategy deployment.</p>
++      <h3 class="agent-name">Copy-Trade Arbitrageur</h3>
++      <p class="agent-desc">Monitors top wallet addresses and instantly executes trades with optimized slippage and gas fees for maximum arbitrage.</p>
+       <ul class="agent-features">
+-        <li>Auto-rebalancing</li>
+-        <li>CVaR risk optimization</li>
++        <li>Wallet tracking</li>
++        <li>MEV protection</li>
+         <li>API access</li>
+         <li>Custom strategies</li>
+@@ -248,7 +248,7 @@
+       <div class="agent-icon">🧪</div>
+-      <h3 class="agent-name">Backtest Bot</h3>
+-      <p class="agent-desc">Test your trading ideas against 10 years of historical data. Validate strategies before risking capital.</p>
++      <h3 class="agent-name">Risk Guardian</h3>
++      <p class="agent-desc">Monitors portfolio exposure, smart contract vulnerabilities, and market volatility to auto-hedge or exit positions when risks spike.</p>
+       <ul class="agent-features">
+-        <li>10 years of data</li>
+-        <li>Multi-asset support</li>
++        <li>Smart contract audits</li>
++        <li>Volatility hedging</li>
+         <li>Strategy validation</li>
+         <li>Risk analysis</li>

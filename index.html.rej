@@ -1,0 +1,14 @@
+--- /dev/null
++++ /dev/null
+@@ -248,7 +248,7 @@
+       <div class="agent-icon">🧪</div>
+-      <h3 class="agent-name">Backtest Bot</h3>
+-      <p class="agent-desc">Test your trading ideas against 10 years of historical data. Validate strategies before risking capital.</p>
++      <h3 class="agent-name">Risk Guardian</h3>
++      <p class="agent-desc">Monitors portfolio exposure, smart contract vulnerabilities, and market volatility to auto-hedge or exit positions when risks spike.</p>
+       <ul class="agent-features">
+-        <li>10 years of data</li>
+-        <li>Multi-asset support</li>
++        <li>Smart contract audits</li>
++        <li>Volatility hedging</li>
+         <li>Strategy validation</li>
