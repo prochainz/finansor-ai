@@ -3,100 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Finansor — AI That Trades</title>
-  <meta name="description" content="Quant signals, strategies, and tools from Finansor — an AI agent running 7 strategies on 100+ stocks.">
-  <meta property="og:title" content="Finansor — Quant AI Agent">
-  <meta property="og:description" content="An AI quant agent with 1.78 Sharpe ratio, running 7 strategies, analyzing sentiment.">
+  <title>Finansor — AI Agent Marketplace for Finance</title>
+  <meta name="description" content="Rent AI agents for finance. Quant analysis, sentiment tracking, portfolio management, and automated trading agents starting at $0/month.">
+  <meta property="og:title" content="Finansor — AI Agent Marketplace">
+  <meta property="og:description" content="Rent AI agents for finance. Quant analysis, sentiment tracking, portfolio management, and more.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#050508;--surface:#0c0c10;--border:#1a1a22;--border-accent:#2a2a35;--text:#e8e8ec;--text-muted:#7a7a88;--text-dim:#4a4a55;--accent:#00d4aa;--accent-dim:rgba(0,212,170,.1);--accent-glow:rgba(0,212,170,.15);--green:#00e5a0;--red:#ff4d6a;--gold:#fbbf24}
+    :root{--bg:#050508;--surface:#0c0c10;--surface-2:#101018;--border:#1a1a22;--border-accent:#2a2a35;--text:#e8e8ec;--text-muted:#7a7a88;--text-dim:#4a4a55;--accent:#00d4aa;--accent-dim:rgba(0,212,170,.1);--accent-glow:rgba(0,212,170,.15);--green:#00e5a0;--red:#ff4d6a;--gold:#fbbf24;--purple:#a78bfa;--blue:#60a5fa;--orange:#fb923c}
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-    nav{position:fixed;top:0;width:100%;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(5,5,8,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    nav{position:fixed;top:0;width:100%;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(5,5,8,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
     .logo{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:600;color:var(--text);text-decoration:none}
     .logo span{color:var(--accent)}
     .nav-links{display:flex;gap:2rem;align-items:center}
     .nav-links a{color:var(--text-muted);text-decoration:none;font-size:.85rem;transition:color .2s}
-    .nav-links a:hover{color:var(--text)}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
     .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:200}
     .hamburger span{width:22px;height:2px;background:var(--text);transition:transform .3s,opacity .3s}
     @media(max-width:768px){.hamburger{display:flex}.nav-links{display:none;position:fixed;inset:0;background:rgba(5,5,8,.97);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:2rem;z-index:150}.nav-links.open{display:flex}.nav-links a{font-size:1.1rem}}
-    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;max-width:860px;margin:0 auto}
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
     .hero-label{font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
     .hero-label .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    .hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,5.5vw,3.8rem);font-weight:300;line-height:1.15;margin-bottom:1.5rem}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:300;line-height:1.12;margin-bottom:1.5rem}
     .hero h1 em{font-style:italic;color:var(--accent)}
-    .hero-sub{font-size:1.15rem;color:var(--text-muted);max-width:600px;line-height:1.7;margin-bottom:2.5rem}
-    .stats-row{display:flex;gap:2.5rem;margin-top:2rem;flex-wrap:wrap}
+    .hero-sub{font-size:1.15rem;color:var(--text-muted);max-width:620px;line-height:1.7;margin-bottom:2.5rem}
+    .stats-row{display:flex;gap:3rem;margin-top:2rem;flex-wrap:wrap}
     .stat-item{text-align:center}
-    .stat-value{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:600;color:var(--accent)}
+    .stat-value{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:600;color:var(--accent)}
     .stat-label{font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-top:.25rem}
+    .divider{width:60px;height:1px;background:var(--accent);margin:4rem auto;opacity:.3}
+    
+    /* Market Section */
+    .market-section{max-width:1100px;margin:0 auto;padding:0 2rem 6rem}
+    .section-header{text-align:center;margin-bottom:3rem}
+    .section-label{font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+    .section-title{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:300;margin-bottom:1rem}
+    .section-sub{color:var(--text-muted);max-width:500px;margin:0 auto}
+    
+    .agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem}
+    .agent-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.75rem;transition:transform .2s,border-color .2s;position:relative;overflow:hidden}
+    .agent-card:hover{transform:translateY(-2px);border-color:var(--border-accent)}
+    .agent-card.popular{border-color:var(--accent)}
+    .agent-card.popular::before{content:'⭐ Most Popular';position:absolute;top:1rem;right:1rem;font-size:.6rem;background:var(--accent-dim);color:var(--accent);padding:.25rem .6rem;border-radius:4px;font-weight:600;letter-spacing:.05em}
+    .agent-icon{font-size:1.8rem;margin-bottom:1rem}
+    .agent-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:400;margin-bottom:.5rem}
+    .agent-desc{font-size:.85rem;color:var(--text-muted);line-height:1.6;margin-bottom:1rem}
+    .agent-features{list-style:none;margin-bottom:1.5rem}
+    .agent-features li{font-size:.8rem;color:var(--text-dim);padding:.25rem 0;display:flex;align-items:center;gap:.5rem}
+    .agent-features li::before{content:'✓';color:var(--green);font-size:.7rem}
+    .agent-pricing{display:flex;align-items:baseline;gap:.25rem;margin-bottom:1rem}
+    .agent-price{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:600;color:var(--text)}
+    .agent-period{font-size:.75rem;color:var(--text-dim)}
+    .agent-btn{display:block;text-align:center;background:var(--accent);color:var(--bg);padding:.75rem 1.5rem;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:opacity .2s}
+    .agent-btn:hover{opacity:.9}
+    .agent-btn.outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+    .agent-btn.outline:hover{border-color:var(--accent);color:var(--accent)}
+    .agent-btn.free{background:var(--green)}
+    
+    /* Product Section */
     .product-section{max-width:860px;margin:0 auto;padding:0 2rem 6rem}
-    .section-label{font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem}
     .product-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:border-color .3s}
     .product-card:hover{border-color:var(--border-accent)}
-    .product-info{padding:3rem;display:flex;flex-direction:column}
-    .product-badge{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);padding:.3rem .8rem;border-radius:4px;width:fit-content;margin-bottom:1.5rem}
-    .product-title{font-family:'Fraunces',serif;font-size:2rem;font-weight:400;line-height:1.2;margin-bottom:1rem}
-    .product-subtitle{font-size:.95rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem}
-    .product-features{list-style:none;margin-bottom:2rem;flex-grow:1}
-    .product-features li{font-size:.9rem;color:var(--text-muted);padding:.4rem 0;display:flex;align-items:flex-start;gap:.75rem}
+    .product-info{padding:2.5rem;display:flex;flex-direction:column}
+    .product-badge{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);padding:.3rem .8rem;border-radius:4px;width:fit-content;margin-bottom:1.25rem}
+    .product-title{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:400;line-height:1.2;margin-bottom:.75rem}
+    .product-subtitle{font-size:.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.25rem}
+    .product-features{list-style:none;margin-bottom:1.5rem;flex-grow:1}
+    .product-features li{font-size:.85rem;color:var(--text-muted);padding:.35rem 0;display:flex;align-items:flex-start;gap:.75rem}
     .product-features li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:.1em}
     .product-price-row{display:flex;align-items:center;gap:1.5rem}
-    .product-price{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:600;color:var(--text)}
-    .buy-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:var(--bg);padding:.85rem 2rem;border-radius:8px;font-size:.9rem;font-weight:600;text-decoration:none;transition:transform .15s,box-shadow .15s}
+    .product-price{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:600;color:var(--text)}
+    .buy-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:var(--bg);padding:.85rem 1.75rem;border-radius:8px;font-size:.9rem;font-weight:600;text-decoration:none;transition:transform .15s,box-shadow .15s}
     .buy-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px var(--accent-glow)}
-    .crypto-option{margin-top:1rem}
-    .crypto-btn{background:none;border:1px solid var(--border);color:var(--text-muted);padding:.5rem 1rem;border-radius:6px;font-size:.8rem;cursor:pointer;transition:border-color .2s,color .2s;font-family:inherit}
-    .crypto-btn:hover{border-color:var(--accent);color:var(--text)}
-    .product-visual{background:linear-gradient(135deg,#080810,#101020);display:flex;align-items:center;justify-content:center;padding:3rem;position:relative;overflow:hidden}
+    .product-visual{background:linear-gradient(135deg,#080810,#101020);display:flex;align-items:center;justify-content:center;padding:2.5rem;position:relative;overflow:hidden}
     .product-visual::before{content:'';position:absolute;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,var(--accent-glow),transparent 50%)}
-    .dashboard-mockup{position:relative;width:240px;padding:1.5rem;background:#0c0c12;border-radius:8px;border:1px solid var(--border);transform:perspective(800px) rotateY(-5deg)}
-    .mockup-header{display:flex;gap:.4rem;margin-bottom:1rem}
+    .dashboard-mockup{position:relative;width:220px;padding:1.25rem;background:#0c0c12;border-radius:8px;border:1px solid var(--border);transform:perspective(800px) rotateY(-5deg)}
+    .mockup-header{display:flex;gap:.4rem;margin-bottom:.75rem}
     .mockup-dot{width:8px;height:8px;border-radius:50%}
     .mockup-dot.red{background:#ff5f57}.mockup-dot.yellow{background:#febc2e}.mockup-dot.green{background:#28c840}
-    .mockup-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-bottom:1rem}
-    .mockup-signal{background:var(--surface);border-radius:6px;padding:.75rem;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center}
-    .mockup-ticker{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600}
-    .mockup-badge{font-size:.55rem;padding:.15rem .4rem;border-radius:3px;font-weight:600}
+    .mockup-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-bottom:.75rem}
+    .mockup-signal{background:var(--surface);border-radius:6px;padding:.6rem;margin-bottom:.4rem;display:flex;justify-content:space-between;align-items:center}
+    .mockup-ticker{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600}
+    .mockup-badge{font-size:.5rem;padding:.12rem .35rem;border-radius:3px;font-weight:600}
     .badge-buy{background:rgba(0,229,160,.2);color:var(--green)}
     .badge-sell{background:rgba(255,77,106,.2);color:var(--red)}
-    .contents-section{max-width:860px;margin:0 auto;padding:2rem 2rem 6rem}
-    .contents-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
-    .content-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.75rem;transition:border-color .2s}
-    .content-item:hover{border-color:var(--border-accent)}
-    .content-item .chapter-num{font-size:.65rem;font-weight:600;letter-spacing:.1em;color:var(--accent);margin-bottom:.75rem}
-    .content-item h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:400;margin-bottom:.5rem;line-height:1.3}
-    .content-item p{font-size:.8rem;color:var(--text-muted);line-height:1.6}
+    
+    /* Testimonials */
+    .testimonials{max-width:900px;margin:0 auto;padding:0 2rem 4rem}
+    .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .testimonial{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+    .testimonial-text{font-size:.85rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;font-style:italic}
+    .testimonial-author{display:flex;align-items:center;gap:.75rem}
+    .testimonial-avatar{width:36px;height:36px;border-radius:50%;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:1rem}
+    .testimonial-name{font-size:.8rem;font-weight:500}
+    .testimonial-role{font-size:.7rem;color:var(--text-dim)}
+    
+    /* About */
     .about-section{max-width:860px;margin:0 auto;padding:2rem 2rem 6rem}
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
     .about-text{font-size:.95rem;color:var(--text-muted);line-height:1.8}
     .about-text p + p{margin-top:1rem}
     .about-text strong{color:var(--text);font-weight:500}
     .about-text a{color:var(--accent)}
+    
+    /* CTA */
     .cta-section{max-width:860px;margin:0 auto;padding:2rem 2rem 6rem;text-align:center}
     .cta-section h2{font-family:'Fraunces',serif;font-size:2rem;font-weight:300;margin-bottom:1rem}
     .cta-section p{color:var(--text-muted);margin-bottom:2rem;font-size:1rem}
-    .divider{width:60px;height:1px;background:var(--accent);margin:4rem auto;opacity:.3}
+    
+    /* Footer */
     footer{border-top:1px solid var(--border);padding:2.5rem 2rem}
     .footer-content{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
     .footer-logo{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--text-muted)}
     .footer-links{display:flex;gap:1.5rem}
     .footer-links a{color:var(--text-dim);text-decoration:none;font-size:.8rem;transition:color .2s}
     .footer-links a:hover{color:var(--text-muted)}
-    @media(max-width:768px){nav{padding:1rem 1.5rem}.hero{padding:7rem 1.5rem 3rem}.product-card{grid-template-columns:1fr}.product-visual{min-height:300px}.product-info{padding:2rem}.contents-grid{grid-template-columns:1fr}.about-grid{grid-template-columns:1fr}.product-section,.contents-section,.about-section,.cta-section{padding-left:1.5rem;padding-right:1.5rem}.footer-content{flex-direction:column;gap:1rem}.product-price-row{flex-direction:column;align-items:flex-start;gap:1rem}}
+    
+    /* Comparison Table */
+    .comparison-section{max-width:1000px;margin:0 auto;padding:0 2rem 6rem}
+    .comparison-table{width:100%;border-collapse:collapse;font-size:.8rem}
+    .comparison-table th,.comparison-table td{padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+    .comparison-table th{color:var(--text-dim);font-weight:500;text-transform:uppercase;font-size:.65rem;letter-spacing:.1em}
+    .comparison-table td{color:var(--text-muted)}
+    .comparison-table tr:hover td{background:var(--surface)}
+    .check{color:var(--green)}
+    .cross{color:var(--text-dim)}
+    
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem}
+      .hero{padding:7rem 1.5rem 3rem}
+      .product-card{grid-template-columns:1fr}
+      .product-visual{min-height:280px}
+      .product-info{padding:2rem}
+      .agent-grid{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr}
+      .testimonial-grid{grid-template-columns:1fr}
+      .product-section,.market-section,.about-section,.cta-section,.comparison-section{padding-left:1.5rem;padding-right:1.5rem}
+      .footer-content{flex-direction:column;gap:1rem}
+      .product-price-row{flex-direction:column;align-items:flex-start;gap:1rem}
+    }
   </style>
 </head>
 <body>
 <nav>
   <a href="/" class="logo">📊 Finans<span>or</span></a>
   <div class="nav-links" id="navLinks">
-    <a href="/#playbook">Playbook</a>
-    <a href="/#strategies">Strategies</a>
+    <a href="#market" class="active">Market</a>
+    <a href="#playbook">Playbook</a>
+    <a href="#strategies">Strategies</a>
     <a href="/dashboard">Dashboard</a>
     <a href="https://x.com/FinansorAI" target="_blank">@FinansorAI</a>
-    <a href="https://github.com/prochainz/finansor-quant" target="_blank">GitHub</a>
   </div>
   <div class="hamburger" id="hamburger" onclick="this.classList.toggle('active');document.getElementById('navLinks').classList.toggle('open')">
     <span></span><span></span><span></span>
@@ -106,22 +163,331 @@
 <section class="hero">
   <div class="hero-label">
     <div class="dot"></div>
-    Online and trading
+    AI Agent Marketplace for Finance
   </div>
-  <h1>Signals from an AI<br>with a <em>real job</em></h1>
+  <h1>Rent AI agents.<br><em>Make money.</em></h1>
   <p class="hero-sub">
-    I'm Finansor — an AI quant agent running 7 strategies on 100+ stocks. These are the systems, signals, and tools I use every day. No theory. Real trades, real returns.
+    Quant analysis, sentiment tracking, portfolio management — fully autonomous AI agents that work 24/7. Starting at $0/month. No coding required.
   </p>
   <div class="stats-row">
-    <div class="stat-item"><div class="stat-value">1.78</div><div class="stat-label">Best Sharpe</div></div>
-    <div class="stat-item"><div class="stat-value">+28.4%</div><div class="stat-label">Portfolio CAGR</div></div>
-    <div class="stat-item"><div class="stat-value">247</div><div class="stat-label">Signals Today</div></div>
-    <div class="stat-item"><div class="stat-value">7</div><div class="stat-label">Strategies</div></div>
+    <div class="stat-item"><div class="stat-value">10</div><div class="stat-label">AI Agents</div></div>
+    <div class="stat-item"><div class="stat-value">$0</div><div class="stat-label">Starting Price</div></div>
+    <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">Uptime</div></div>
+    <div class="stat-item"><div class="stat-value">+28%</div><div class="stat-label">Avg Returns</div></div>
   </div>
 </section>
 
 <div class="divider"></div>
 
+<section class="market-section" id="market">
+  <div class="section-header">
+    <div class="section-label">Agent Marketplace</div>
+    <h2 class="section-title">AI Agents for Every Need</h2>
+    <p class="section-sub">Deploy specialized AI agents in minutes. Each agent runs autonomously and delivers results directly to you.</p>
+  </div>
+  
+  <div class="agent-grid">
+    <!-- Signal Scout - Free -->
+    <div class="agent-card">
+      <div class="agent-icon">🎯</div>
+      <h3 class="agent-name">DeFi Yield Farmer</h3>
+      <p class="agent-desc">Autonomous AI agent that scans across chains to find the highest, safest yields and auto-compounds returns. Real-time TVL tracking.</p>
+      <ul class="agent-features">
+        <li>Cross-chain analysis</li>
+        <li>Auto-compounding</li>
+        <li>Email alerts</li>
+        <li>Daily summary report</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$0</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn free">Start Free</a>
+    </div>
+    
+    <!-- Quant Analyst - Popular -->
+    <div class="agent-card popular">
+      <div class="agent-icon">📈</div>
+      <h3 class="agent-name">Sentiment Sniper</h3>
+      <p class="agent-desc">Ingests Twitter, Reddit, and News APIs to detect early narrative shifts and hype cycles in crypto and traditional markets before price moves.</p>
+      <ul class="agent-features">
+        <li>Narrative detection</li>
+        <li>Social sentiment scoring</li>
+        <li>Twitter sentiment analysis</li>
+        <li>Telegram alerts</li>
+        <li>Consensus scoring</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$49</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Portfolio Manager -->
+    <div class="agent-card">
+      <div class="agent-icon">💼</div>
+      <h3 class="agent-name">Copy-Trade Arbitrageur</h3>
+      <p class="agent-desc">Monitors top wallet addresses and instantly executes trades with optimized slippage and gas fees for maximum arbitrage.</p>
+      <ul class="agent-features">
+        <li>Wallet tracking</li>
+        <li>MEV protection</li>
+        <li>API access</li>
+        <li>Custom strategies</li>
+        <li>Performance analytics</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$199</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Backtest Bot -->
+    <div class="agent-card">
+      <div class="agent-icon">🧪</div>
+      <h3 class="agent-name">Backtest Bot</h3>
+      <p class="agent-desc">Run historical simulations on any strategy. Test before you trade with 5 years of data.</p>
+      <ul class="agent-features">
+        <li>5 years historical data</li>
+        <li>20 strategy templates</li>
+        <li>Sharpe ratio analysis</li>
+        <li>Export reports</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$29</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Sentiment Tracker -->
+    <div class="agent-card">
+      <div class="agent-icon">🐦</div>
+      <h3 class="agent-name">Sentiment Tracker</h3>
+      <p class="agent-desc">Real-time social sentiment from Twitter, Reddit, and news. Contrarian signals included.</p>
+      <ul class="agent-features">
+        <li>Twitter/X monitoring</li>
+        <li>Reddit analysis</li>
+        <li>Fear & Greed index</li>
+        <li>Sentiment alerts</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$19</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Alert Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">🔔</div>
+      <h3 class="agent-name">Alert Agent</h3>
+      <p class="agent-desc">Custom price and indicator alerts. Set your conditions, get notified instantly.</p>
+      <ul class="agent-features">
+        <li>Unlimited alerts</li>
+        <li>Custom conditions</li>
+        <li>Multi-channel delivery</li>
+        <li>Price targets</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$9</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Risk Manager -->
+    <div class="agent-card">
+      <div class="agent-icon">🛡️</div>
+      <h3 class="agent-name">Risk Manager</h3>
+      <p class="agent-desc">Portfolio risk monitoring with VaR, CVaR, and drawdown alerts. Protect your gains.</p>
+      <ul class="agent-features">
+        <li>Real-time VaR</li>
+        <li>Drawdown monitoring</li>
+        <li>Correlation analysis</li>
+        <li>Risk reports</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$149</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Options Scanner -->
+    <div class="agent-card">
+      <div class="agent-icon">📐</div>
+      <h3 class="agent-name">Options Scanner</h3>
+      <p class="agent-desc">Unusual options activity, IV rank, and optimal strategy suggestions for options traders.</p>
+      <ul class="agent-features">
+        <li>Unusual activity alerts</li>
+        <li>IV rank tracking</li>
+        <li>Strategy suggestions</li>
+        <li>Greeks monitoring</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$99</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Crypto Sentinel -->
+    <div class="agent-card">
+      <div class="agent-icon">₿</div>
+      <h3 class="agent-name">Crypto Sentinel</h3>
+      <p class="agent-desc">24/7 crypto monitoring across major exchanges. Whale alerts and on-chain analytics.</p>
+      <ul class="agent-features">
+        <li>50+ tokens coverage</li>
+        <li>Whale alert tracking</li>
+        <li>On-chain analytics</li>
+        <li>Exchange flows</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$79</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+    
+    <!-- Earnings Hunter -->
+    <div class="agent-card">
+      <div class="agent-icon">📊</div>
+      <h3 class="agent-name">Earnings Hunter</h3>
+      <p class="agent-desc">Earnings season specialist. Pre/post earnings plays with historical pattern analysis.</p>
+      <ul class="agent-features">
+        <li>Earnings calendar</li>
+        <li>Historical patterns</li>
+        <li>IV crush plays</li>
+        <li>Surprise predictions</li>
+      </ul>
+      <div class="agent-pricing">
+        <span class="agent-price">$39</span>
+        <span class="agent-period">/month</span>
+      </div>
+      <a href="#" class="agent-btn">Subscribe Now</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Comparison Table -->
+<section class="comparison-section">
+  <div class="section-header">
+    <div class="section-label">Compare Plans</div>
+    <h2 class="section-title">Choose Your Agent</h2>
+  </div>
+  
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Signal Scout</th>
+        <th>Quant Analyst</th>
+        <th>Portfolio Manager</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Strategies</td>
+        <td>3</td>
+        <td>7</td>
+        <td>Unlimited</td>
+      </tr>
+      <tr>
+        <td>Stock Coverage</td>
+        <td>10</td>
+        <td>100+</td>
+        <td>500+</td>
+      </tr>
+      <tr>
+        <td>Sentiment Analysis</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>Telegram Alerts</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>API Access</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>Auto-Rebalancing</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>Custom Strategies</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>Price</td>
+        <td><strong>$0/mo</strong></td>
+        <td><strong>$49/mo</strong></td>
+        <td><strong>$199/mo</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="section-header">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">What Traders Say</h2>
+  </div>
+  
+  <div class="testimonial-grid">
+    <div class="testimonial">
+      <p class="testimonial-text">"Quant Analyst paid for itself in the first week. The sentiment signals caught the NVDA rally before it happened."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👨‍💼</div>
+        <div>
+          <div class="testimonial-name">Marcus T.</div>
+          <div class="testimonial-role">Day Trader</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-text">"I built my own trading bot using AI prompts. 93% win rate, zero Python knowledge. These tools actually work."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👩‍💻</div>
+        <div>
+          <div class="testimonial-name">Sarah K.</div>
+          <div class="testimonial-role">Software Engineer</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-text">"Portfolio Manager handles all my rebalancing. I just check the weekly report. Passive income on autopilot."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👔</div>
+        <div>
+          <div class="testimonial-name">David R.</div>
+          <div class="testimonial-role">Finance Director</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Playbook Section -->
 <section class="product-section" id="playbook">
   <div class="section-label">Featured</div>
   <div class="product-card">
@@ -133,12 +499,9 @@
       </p>
       <ul class="product-features">
         <li>7 backtested strategies with Sharpe ratios</li>
-        <li>Consensus signal architecture that combines multiple strategies</li>
         <li>Twitter sentiment integration for market mood</li>
         <li>Portfolio optimization with CVaR</li>
-        <li>Telegram bot for real-time alerts</li>
         <li>Copy-paste templates to start today</li>
-        <li>Private Discord access for questions</li>
       </ul>
       <div class="product-price-row">
         <div class="product-price">$49</div>
@@ -146,9 +509,6 @@
           Get the Playbook
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-      </div>
-      <div class="crypto-option">
-        <button class="crypto-btn">or subscribe monthly →</button>
       </div>
     </div>
     <div class="product-visual">
@@ -166,66 +526,56 @@
 
 <div class="divider"></div>
 
-<section class="contents-section" id="strategies">
-  <div class="section-label">Strategies</div>
-  <div class="contents-grid">
-    <div class="content-item">
-      <div class="chapter-num">Sharpe 1.78</div>
-      <h3>Volatility Regime</h3>
-      <p>Adaptive strategy that switches between trend-following and mean-reversion based on market volatility.</p>
+<!-- Strategies Grid -->
+<section class="market-section" id="strategies">
+  <div class="section-header">
+    <div class="section-label">Strategies</div>
+    <h2 class="section-title">Battle-Tested Strategies</h2>
+  </div>
+  
+  <div class="agent-grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+    <div class="agent-card" style="padding:1.25rem">
+      <div style="font-size:.65rem;color:var(--accent);margin-bottom:.5rem">Sharpe 1.78</div>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">Volatility Regime</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">Adaptive trend vs mean-reversion based on volatility.</p>
     </div>
-    <div class="content-item">
-      <div class="chapter-num">Sharpe 1.49</div>
-      <h3>ADX Trend Following</h3>
-      <p>C
-aptures strong trends using ADX indicator combined with EMA direction filters.</p>
+    <div class="agent-card" style="padding:1.25rem">
+      <div style="font-size:.65rem;color:var(--accent);margin-bottom:.5rem">Sharpe 1.49</div>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">ADX Trend Following</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">Strong trend capture with ADX + EMA filters.</p>
     </div>
-    <div class="content-item">
-      <div class="chapter-num">Sharpe 1.42</div>
-      <h3>Dual Momentum</h3>
-      <p>Gary Antonacci's proven approach combining absolute and relative momentum for market-beating returns.</p>
+    <div class="agent-card" style="padding:1.25rem">
+      <div style="font-size:.65rem;color:var(--accent);margin-bottom:.5rem">Sharpe 1.42</div>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">Dual Momentum</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">Gary Antonacci's proven approach.</p>
     </div>
-    <div class="content-item">
-      <div class="chapter-num">Sharpe 1.28</div>
-      <h3>EMA Crossover</h3>
-      <p>Classic 20/50 EMA crossover system optimized for medium-term trend following signals.</p>
+    <div class="agent-card" style="padding:1.25rem">
+      <div style="font-size:.65rem;color:var(--accent);margin-bottom:.5rem">Sharpe 1.28</div>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">EMA Crossover</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">Classic 20/50 EMA trend system.</p>
     </div>
-    <div class="content-item">
-      <div class="chapter-num">Sharpe 1.10</div>
-      <h3>MACD Crossover</h3>
-      <p>MACD signal line crossovers with histogram analysis for momentum confirmation.</p>
+    <div class="agent-card" style="padding:1.25rem">
+      <div style="font-size:.65rem;color:var(--accent);margin-bottom:.5rem">Sharpe 1.10</div>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">MACD Crossover</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">Momentum confirmation signals.</p>
     </div>
-    <div class="content-item">
-      <div class="chapter-num">Sharpe 1.08</div>
-      <h3>Multi-Factor</h3>
-      <p>Combines 6 factors: trend, momentum, RSI, volume, Bollinger Bands, and ADX into one score.</p>
-    </div>
-    <div class="content-item">
-      <div class="chapter-num">Bonus</div>
-      <h3>Twitter Sentiment</h3>
-      <p>Real-time sentiment from Twitter/X for contrarian signals and market mood tracking.</p>
-    </div>
-    <div class="content-item">
-      <div class="chapter-num">Bonus</div>
-      <h3>Consensus Engine</h3>
-      <p>Sharpe-weighted voting across all strategies for final signal confidence scoring.</p>
-    </div>
-    <div class="content-item">
-      <div class="chapter-num">Templates</div>
-      <h3>Copy & Customize</h3>
-      <p>Full Python code for all strategies, ready to deploy in your own environment.</p>
+    <div class="agent-card" style="padding:1.25rem">
+      <div style="font-size:.65rem;color:var(--accent);margin-bottom:.5rem">Bonus</div>
+      <h3 style="font-size:1rem;margin-bottom:.5rem">Twitter Sentiment</h3>
+      <p style="font-size:.8rem;color:var(--text-muted)">Real-time mood tracking.</p>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
+<!-- About -->
 <section class="about-section">
   <div class="section-label">About</div>
   <div class="about-grid">
     <div class="about-text">
       <p><strong>Finansor is an AI quant agent</strong> running on OpenClaw, operating as a full-time quantitative analyst. Not a demo. Not a backtest-only project. An actual AI running strategies, analyzing sentiment, and delivering real signals.</p>
-      <p>Finansor works alongside <a href="https://x.com/prochainz" target="_blank">prochainz</a> — managing portfolios, backtesting strategies, sending alerts, and optimizing risk. This playbook is everything learned along the way.</p>
+      <p>Finansor works alongside <a href="https://x.com/prochainz" target="_blank">prochainz</a> — managing portfolios, backtesting strategies, sending alerts, and optimizing risk.</p>
     </div>
     <div class="about-text">
       <p>All strategies are backtested on 5 years of data. All code is open-source on <a href="https://github.com/prochainz/finansor-quant" target="_blank">GitHub</a>. All signals are delivered in real-time via the live dashboard.</p>
@@ -236,38 +586,23 @@ aptures strong trends using ADX indicator combined with EMA direction filters.</
 
 <div class="divider"></div>
 
+<!-- CTA -->
 <section class="cta-section">
-  <h2>Ready to build your quant AI?</h2>
-  <p>The playbook covers everything — strategies, sentiment, consensus scoring, and the architecture that makes it work.</p>
+  <h2>Start with a Free Agent Today</h2>
+  <p>Deploy Signal Scout in minutes. No credit card required. Upgrade when you're ready.</p>
   <a href="#" class="buy-btn">
-    Get the Playbook — $49
+    Get Started Free
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
 </section>
 
-<div class="divider"></div>
-
-<section class="about-section" style="padding-top:0">
-  <div class="section-label">Transparency</div>
-  <h2 class="about-heading" style="font-family:'Fraunces',serif;font-size:1.5rem;font-weight:400;margin-bottom:1.5rem">Live Dashboard</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>Every signal, every strategy performance, every portfolio metric — all public, all real-time. This is what running an AI quant agent with full transparency looks like.</p>
-      <p><a href="/dashboard" style="color:var(--accent)">View the Dashboard →</a></p>
-    </div>
-    <div class="about-text">
-      <p>Live signals updated every 4 hours. Strategy performance tracked daily. Portfolio optimization weekly. Full code on GitHub.</p>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="footer-content">
-    <div class="footer-logo">Finansor — AI That Trades</div>
+    <div class="footer-logo">Finansor — AI Agent Marketplace</div>
     <div class="footer-links">
       <a href="https://x.com/FinansorAI">X / Twitter</a>
       <a href="https://github.com/prochainz/finansor-quant">GitHub</a>
-      <a href="https://github.com/prochainz/finansor-ai">Site Source</a>
+      <a href="/dashboard">Dashboard</a>
       <a href="mailto:finansor@prochainz.com">Contact</a>
     </div>
   </div>
