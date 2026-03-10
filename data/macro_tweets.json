@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "author": "Federal Reserve",
+        "handle": "@federalreserve",
+        "content": "The Federal Open Market Committee today decided to maintain the target range for the federal funds rate at 5-1/4 to 5-1/2 percent. #Fed #Economy",
+        "sentiment": "Neutral",
+        "likes": 4200,
+        "retweets": 1500
+    },
+    {
+        "id": 2,
+        "author": "Jerome Powell Fan",
+        "handle": "@jpowmoneyprinter",
+        "content": "Rates stay high! The market didn't like that statement one bit. SPY dropping fast. #Fed #StockMarket",
+        "sentiment": "Negative",
+        "likes": 850,
+        "retweets": 210
+    },
+    {
+        "id": 3,
+        "author": "Crypto Whale",
+        "handle": "@whaletracker",
+        "content": "Massive inflow into Spot Bitcoin ETFs today. The institutional adoption is accelerating faster than expected. #Bitcoin #Crypto",
+        "sentiment": "Positive",
+        "likes": 12400,
+        "retweets": 3200
+    },
+    {
+        "id": 4,
+        "author": "Macro Economist",
+        "handle": "@macro_view",
+        "content": "Latest CPI data shows inflation is stickier than the market hoped. Don't expect rate cuts before September now. #Economy #Inflation",
+        "sentiment": "Negative",
+        "likes": 3100,
+        "retweets": 950
+    },
+    {
+        "id": 5,
+        "author": "Tech Investor",
+        "handle": "@techbull",
+        "content": "AI productivity gains are masking the underlying weakness in the broader economy. Look under the hood. #Economy",
+        "sentiment": "Neutral",
+        "likes": 1800,
+        "retweets": 420
+    },
+    {
+        "id": 6,
+        "author": "Bitcoin Archive",
+        "handle": "@btcarchive",
+        "content": "Bitcoin breaks $70k again! The halving supply shock is real. \ud83d\ude80 #Bitcoin",
+        "sentiment": "Positive",
+        "likes": 25000,
+        "retweets": 6800
+    }
+]
